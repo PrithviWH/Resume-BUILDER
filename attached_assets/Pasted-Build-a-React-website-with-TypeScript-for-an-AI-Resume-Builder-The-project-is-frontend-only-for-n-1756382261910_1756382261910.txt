@@ -1,0 +1,107 @@
+Build a React website (with TypeScript) for an AI Resume Builder. The project is frontend-only for now, but should be scalable to add backend/AI later.
+
+Tech Stack Requirements
+
+React + TypeScript (main framework)
+
+Tailwind CSS (for styling)
+
+shadcn/ui (ready-made UI components)
+
+react-router-dom (for navigation between flows)
+
+Zustand (for global state management of resume data)
+
+slate.js or draft-js (for editable text editor in resume workspace)
+
+pdf-lib (to parse & edit uploaded PDFs)
+
+react-to-print or html2pdf.js (for PDF export)
+
+docx (npm package) (for DOCX export)
+
+Pages & Features
+
+1. Homepage
+
+Heading: “AI Resume Builder (Fast, Easy & Free to Use)”
+
+Paragraph: “Land your next job with one of the best AI resume builders online. Work from your computer or phone with dozens of recruiter-approved templates and add ready-to-use skills and phrases in one click. Millions have trusted our resume maker and it’s free to use!”
+
+Below → two large option buttons/cards:
+
+Import My Resume
+
+Build My Resume from Scratch
+
+2. Import My Resume Flow
+
+New page with PDF upload section.
+
+After upload → open Resume Editor Workspace.
+
+Workspace Features:
+
+Live resume preview (editable text & sections).
+
+Sidebar → switch templates (Minimalist, Creative, Professional, Modern).
+
+Editing options → fonts, colors, text size, alignment, icons.
+
+Templates apply instantly to preview.
+
+3. Build My Resume from Scratch Flow
+
+Step-by-step wizard form:
+
+Personal Information (Name, Phone, Email, City/State, LinkedIn, GitHub)
+
+Work Experience (Company, Title, Dates, Bullet points)
+
+Education (School/College, Degree, Graduation Year)
+
+Technical Skills (skills in separate boxes)
+
+Strengths (strengths in separate boxes)
+
+Each slide should include “Skip, Jump to Resume Editor” option.
+
+After completion → redirect to Resume Editor Workspace.
+
+4. Resume Editor Workspace (Common for Both Flows)
+
+Looks like a mix of Google Docs + Canva.
+
+Live Preview of resume.
+
+Sidebar Controls:
+
+Templates Gallery (Minimalist, Creative, Professional, Modern).
+
+Editing options → fonts, colors, alignment, spacing, icons.
+
+ATS Optimization Checker → warnings like:
+
+“Avoid tables/graphics, might break ATS.”
+
+“Use standard fonts for better parsing.”
+
+Export Options:
+
+Download as PDF
+
+Download as DOCX
+
+Generate shareable link (for now just simulate, real backend later).
+
+Fully responsive (desktop, tablet, mobile).
+
+5. Extra Notes
+
+No backend/AI for now, just frontend features.
+
+Templates should be ATS-friendly (clean fonts, minimal graphics).
+
+Smooth transitions/animations for better UX.
+
+Keep design clean, modern, professional.
