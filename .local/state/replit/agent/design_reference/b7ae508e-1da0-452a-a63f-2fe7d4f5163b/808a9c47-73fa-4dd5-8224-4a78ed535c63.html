@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Builder - Fast, Easy & Free to Use</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                borderRadius: {
+                    lg: "var(--radius)",
+                    md: "calc(var(--radius) - 2px)",
+                    sm: "calc(var(--radius) - 4px)",
+                },
+                colors: {
+                    background: "var(--background)",
+                    foreground: "var(--foreground)",
+                    card: {
+                        DEFAULT: "var(--card)",
+                        foreground: "var(--card-foreground)",
+                    },
+                    popover: {
+                        DEFAULT: "var(--popover)",
+                        foreground: "var(--popover-foreground)",
+                    },
+                    primary: {
+                        DEFAULT: "var(--primary)",
+                        foreground: "var(--primary-foreground)",
+                    },
+                    secondary: {
+                        DEFAULT: "var(--secondary)",
+                        foreground: "var(--secondary-foreground)",
+                    },
+                    muted: {
+                        DEFAULT: "var(--muted)",
+                        foreground: "var(--muted-foreground)",
+                    },
+                    accent: {
+                        DEFAULT: "var(--accent)",
+                        foreground: "var(--accent-foreground)",
+                    },
+                    destructive: {
+                        DEFAULT: "var(--destructive)",
+                        foreground: "var(--destructive-foreground)",
+                    },
+                    border: "var(--border)",
+                    input: "var(--input)",
+                    ring: "var(--ring)",
+                },
+                fontFamily: {
+                    sans: ["var(--font-sans)"],
+                }
+            },
+        }
+    };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --background: hsl(0 0% 100%);
+            --foreground: hsl(222.2 84% 4.9%);
+            --card: hsl(0 0% 100%);
+            --card-foreground: hsl(222.2 84% 4.9%);
+            --popover: hsl(0 0% 100%);
+            --popover-foreground: hsl(222.2 84% 4.9%);
+            --primary: hsl(221.2 83.2% 53.3%);
+            --primary-foreground: hsl(210 40% 98%);
+            --secondary: hsl(210 40% 96%);
+            --secondary-foreground: hsl(222.2 84% 4.9%);
+            --muted: hsl(210 40% 96%);
+            --muted-foreground: hsl(215.4 16.3% 46.9%);
+            --accent: hsl(142.1 76.2% 36.3%);
+            --accent-foreground: hsl(355.7 100% 97.3%);
+            --destructive: hsl(0 84.2% 60.2%);
+            --destructive-foreground: hsl(210 40% 98%);
+            --border: hsl(214.3 31.8% 91.4%);
+            --input: hsl(214.3 31.8% 91.4%);
+            --ring: hsl(221.2 83.2% 53.3%);
+            --radius: 0.75rem;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        * {
+            font-family: var(--font-sans);
+        }
+        
+        .resume-preview {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: scale(0.8);
+            transform-origin: top left;
+        }
+        
+        .template-card {
+            transition: all 0.2s ease;
+        }
+        
+        .template-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .main-cta-card {
+            transition: all 0.3s ease;
+        }
+        
+        .main-cta-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background text-foreground min-h-screen">
+    <!-- Page Container -->
+    <div id="page-container">
+        <!-- Homepage -->
+        <div id="homepage" class="min-h-screen">
+            <!-- Header Navigation -->
+            <!-- @COMPONENT: Header -->
+            <header class="bg-background border-b border-border sticky top-0 z-50">
+                <div class="container mx-auto px-6 py-4">
+                    <nav class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                                <i class="fas fa-file-alt text-primary-foreground text-lg"></i>
+                            </div>
+                            <span class="text-xl font-bold text-foreground">ResumeAI</span>
+                        </div>
+                        <div class="hidden md:flex items-center space-x-8">
+                            <a href="#" class="text-muted-foreground hover:text-foreground transition-colors">Templates</a>
+                            <a href="#" class="text-muted-foreground hover:text-foreground transition-colors">Examples</a>
+                            <a href="#" class="text-muted-foreground hover:text-foreground transition-colors">Tips</a>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <button class="text-muted-foreground hover:text-foreground transition-colors">Sign In</button>
+                            <button class="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors">Sign Up</button>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+            <!-- @END_COMPONENT: Header -->
+
+            <!-- Hero Section -->
+            <section class="container mx-auto px-6 py-16 lg:py-24">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
+                        AI Resume Builder
+                        <span class="text-primary">(Fast, Easy & Free to Use)</span>
+                    </h1>
+                    <p class="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
+                        Land your next job with one of the best AI resume builders online. Work from your computer or phone with dozens of recruiter-approved templates and add ready-to-use skills and phrases in one click. Millions have trusted our resume maker and it's free to use!
+                    </p>
+                    
+                    <!-- Main CTA Cards -->
+                    <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                        <!-- Import Resume Card -->
+                        <!-- @COMPONENT: CTACard [action: import] -->
+                        <div class="main-cta-card bg-card border border-border rounded-xl p-8 cursor-pointer group" onclick="showImportFlow()">
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-accent/10 rounded-xl mx-auto mb-6 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                                    <i class="fas fa-upload text-accent text-2xl"></i>
+                                </div>
+                                <h3 class="text-2xl font-semibold text-foreground mb-4">Import My Resume</h3>
+                                <p class="text-muted-foreground mb-6">
+                                    Already have a resume? Upload your PDF and we'll help you make it better with AI suggestions and professional templates.
+                                </p>
+                                <div class="bg-primary text-primary-foreground px-6 py-3 rounded-lg inline-block group-hover:bg-primary/90 transition-colors">
+                                    Upload Resume <i class="fas fa-arrow-right ml-2"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- @END_COMPONENT: CTACard -->
+
+                        <!-- Build from Scratch Card -->
+                        <!-- @COMPONENT: CTACard [action: build] -->
+                        <div class="main-cta-card bg-card border border-border rounded-xl p-8 cursor-pointer group" onclick="showBuildFlow()">
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-primary/10 rounded-xl mx-auto mb-6 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                                    <i class="fas fa-plus text-primary text-2xl"></i>
+                                </div>
+                                <h3 class="text-2xl font-semibold text-foreground mb-4">Build My Resume from Scratch</h3>
+                                <p class="text-muted-foreground mb-6">
+                                    Starting fresh? No problem! Our step-by-step wizard will guide you through creating a professional resume from the ground up.
+                                </p>
+                                <div class="bg-primary text-primary-foreground px-6 py-3 rounded-lg inline-block group-hover:bg-primary/90 transition-colors">
+                                    Start Building <i class="fas fa-arrow-right ml-2"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- @END_COMPONENT: CTACard -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="bg-muted py-16">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="text-center mb-12">
+                            <h2 class="text-3xl font-bold text-foreground mb-4">Why Choose Our AI Resume Builder?</h2>
+                            <p class="text-muted-foreground text-lg">Everything you need to create a professional, ATS-friendly resume</p>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-8">
+                            <div class="bg-card rounded-xl p-6 text-center">
+                                <div class="w-12 h-12 bg-accent/10 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                                    <i class="fas fa-robot text-accent"></i>
+                                </div>
+                                <h3 class="font-semibold text-foreground mb-2">AI-Powered</h3>
+                                <p class="text-muted-foreground text-sm">Smart suggestions and content optimization</p>
+                            </div>
+                            <div class="bg-card rounded-xl p-6 text-center">
+                                <div class="w-12 h-12 bg-primary/10 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                                    <i class="fas fa-check-circle text-primary"></i>
+                                </div>
+                                <h3 class="font-semibold text-foreground mb-2">ATS-Friendly</h3>
+                                <p class="text-muted-foreground text-sm">Optimized for applicant tracking systems</p>
+                            </div>
+                            <div class="bg-card rounded-xl p-6 text-center">
+                                <div class="w-12 h-12 bg-accent/10 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                                    <i class="fas fa-palette text-accent"></i>
+                                </div>
+                                <h3 class="font-semibold text-foreground mb-2">Multiple Templates</h3>
+                                <p class="text-muted-foreground text-sm">Professional designs for every industry</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Import Flow -->
+        <div id="import-flow" class="min-h-screen hidden">
+            <!-- Header -->
+            <!-- @COMPONENT: FlowHeader -->
+            <header class="bg-background border-b border-border sticky top-0 z-50">
+                <div class="container mx-auto px-6 py-4">
+                    <nav class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <button onclick="showHomepage()" class="text-muted-foreground hover:text-foreground transition-colors">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-file-alt text-primary-foreground text-lg"></i>
+                                </div>
+                                <span class="text-xl font-bold text-foreground">ResumeAI</span>
+                            </div>
+                        </div>
+                        <div class="text-sm text-muted-foreground">
+                            Step 1 of 2: Import Resume
+                        </div>
+                    </nav>
+                </div>
+            </header>
+            <!-- @END_COMPONENT: FlowHeader -->
+
+            <!-- Upload Section -->
+            <section class="container mx-auto px-6 py-16">
+                <div class="max-w-2xl mx-auto text-center">
+                    <h1 class="text-3xl font-bold text-foreground mb-4">Import Your Resume</h1>
+                    <p class="text-muted-foreground mb-12">Upload your existing resume and we'll help you make it even better</p>
+                    
+                    <!-- Upload Area -->
+                    <!-- @COMPONENT: FileUpload -->
+                    <div class="border-2 border-dashed border-border rounded-xl p-12 bg-muted/30 hover:bg-muted/50 transition-colors cursor-pointer" data-implementation="Handle PDF file upload with drag & drop">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-primary/10 rounded-xl mx-auto mb-6 flex items-center justify-center">
+                                <i class="fas fa-cloud-upload-alt text-primary text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-foreground mb-2">Drop your resume here</h3>
+                            <p class="text-muted-foreground mb-6">or click to browse files</p>
+                            <div class="bg-primary text-primary-foreground px-6 py-3 rounded-lg inline-block hover:bg-primary/90 transition-colors">
+                                Choose File
+                            </div>
+                            <p class="text-sm text-muted-foreground mt-4">Supports PDF files up to 10MB</p>
+                        </div>
+                    </div>
+                    <!-- @END_COMPONENT: FileUpload -->
+
+                    <div class="mt-8">
+                        <button onclick="showResumeEditor()" class="bg-primary text-primary-foreground px-8 py-3 rounded-lg hover:bg-primary/90 transition-colors" data-implementation="Should only be enabled after successful PDF upload">
+                            Continue to Editor <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Build Flow (Sample Step) -->
+        <div id="build-flow" class="min-h-screen hidden">
+            <!-- Header -->
+            <header class="bg-background border-b border-border sticky top-0 z-50">
+                <div class="container mx-auto px-6 py-4">
+                    <nav class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <button onclick="showHomepage()" class="text-muted-foreground hover:text-foreground transition-colors">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-file-alt text-primary-foreground text-lg"></i>
+                                </div>
+                                <span class="text-xl font-bold text-foreground">ResumeAI</span>
+                            </div>
+                        </div>
+                        <div class="text-sm text-muted-foreground">
+                            Step 1 of 5: Personal Information
+                        </div>
+                    </nav>
+                </div>
+            </header>
+
+            <!-- Form Section -->
+            <section class="container mx-auto px-6 py-16">
+                <div class="max-w-2xl mx-auto">
+                    <div class="text-center mb-12">
+                        <h1 class="text-3xl font-bold text-foreground mb-4">Personal Information</h1>
+                        <p class="text-muted-foreground">Let's start with your basic contact details</p>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="mb-12">
+                        <div class="bg-muted rounded-full h-2">
+                            <div class="bg-primary rounded-full h-2 transition-all duration-300" style="width: 20%"></div>
+                        </div>
+                        <div class="flex justify-between mt-2 text-sm text-muted-foreground">
+                            <span>Personal Info</span>
+                            <span>Experience</span>
+                            <span>Education</span>
+                            <span>Skills</span>
+                            <span>Review</span>
+                        </div>
+                    </div>
+
+                    <!-- Form -->
+                    <!-- @COMPONENT: PersonalInfoForm -->
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-foreground mb-2">First Name</label>
+                                <input type="text" class="w-full px-4 py-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent" placeholder="John" data-bind="personalInfo.firstName">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-foreground mb-2">Last Name</label>
+                                <input type="text" class="w-full px-4 py-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent" placeholder="Doe" data-bind="personalInfo.lastName">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-foreground mb-2">Email</label>
+                            <input type="email" class="w-full px-4 py-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent" placeholder="john.doe@email.com" data-bind="personalInfo.email">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-foreground mb-2">Phone</label>
+                            <input type="tel" class="w-full px-4 py-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent" placeholder="(555) 123-4567" data-bind="personalInfo.phone">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-foreground mb-2">City, State</label>
+                            <input type="text" class="w-full px-4 py-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent" placeholder="San Francisco, CA" data-bind="personalInfo.location">
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-foreground mb-2">LinkedIn (Optional)</label>
+                                <input type="url" class="w-full px-4 py-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent" placeholder="linkedin.com/in/johndoe" data-bind="personalInfo.linkedin">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-foreground mb-2">GitHub (Optional)</label>
+                                <input type="url" class="w-full px-4 py-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent" placeholder="github.com/johndoe" data-bind="personalInfo.github">
+                            </div>
+                        </div>
+                    </form>
+                    <!-- @END_COMPONENT: PersonalInfoForm -->
+
+                    <!-- Actions -->
+                    <div class="flex justify-between items-center mt-12 pt-8 border-t border-border">
+                        <button class="text-muted-foreground hover:text-foreground transition-colors" onclick="showResumeEditor()">
+                            Skip, Jump to Resume Editor
+                        </button>
+                        <button class="bg-primary text-primary-foreground px-8 py-3 rounded-lg hover:bg-primary/90 transition-colors" data-event="click:handleNext" data-implementation="Should validate form and proceed to next step">
+                            Next: Work Experience <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Resume Editor Workspace -->
+        <div id="resume-editor" class="min-h-screen hidden">
+            <!-- Header -->
+            <!-- @COMPONENT: EditorHeader -->
+            <header class="bg-background border-b border-border sticky top-0 z-50">
+                <div class="container mx-auto px-6 py-3">
+                    <nav class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <button onclick="showHomepage()" class="text-muted-foreground hover:text-foreground transition-colors">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-file-alt text-primary-foreground text-lg"></i>
+                                </div>
+                                <span class="text-xl font-bold text-foreground">ResumeAI</span>
+                            </div>
+                            <div class="text-sm text-muted-foreground">Resume Editor</div>
+                        </div>
+                        
+                        <!-- Editor Actions -->
+                        <div class="flex items-center space-x-3">
+                            <!-- ATS Score -->
+                            <div class="flex items-center space-x-2 bg-accent/10 text-accent px-3 py-2 rounded-lg">
+                                <i class="fas fa-check-circle"></i>
+                                <span class="text-sm font-medium">ATS Score: 95%</span>
+                            </div>
+                            
+                            <!-- Export Options -->
+                            <div class="flex items-center space-x-2">
+                                <button class="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors flex items-center space-x-2" data-implementation="Export as PDF using react-to-print">
+                                    <i class="fas fa-download"></i>
+                                    <span>PDF</span>
+                                </button>
+                                <button class="bg-secondary text-secondary-foreground px-4 py-2 rounded-lg hover:bg-secondary/80 transition-colors flex items-center space-x-2" data-implementation="Export as DOCX using docx package">
+                                    <i class="fas fa-file-word"></i>
+                                    <span>DOCX</span>
+                                </button>
+                                <button class="bg-muted text-muted-foreground px-4 py-2 rounded-lg hover:bg-muted/80 transition-colors flex items-center space-x-2" data-implementation="Generate shareable link (simulated for now)">
+                                    <i class="fas fa-share"></i>
+                                    <span>Share</span>
+                                </button>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+            <!-- @END_COMPONENT: EditorHeader -->
+
+            <!-- Editor Layout -->
+            <div class="flex h-screen pt-16">
+                <!-- Sidebar -->
+                <!-- @COMPONENT: EditorSidebar -->
+                <div class="w-80 bg-card border-r border-border overflow-y-auto">
+                    <!-- Templates Section -->
+                    <div class="p-6 border-b border-border">
+                        <h3 class="font-semibold text-foreground mb-4">Templates</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <!-- Template Cards -->
+                            <!-- @MAP: templates.map(template => ( -->
+                            <div class="template-card bg-muted rounded-lg p-3 cursor-pointer border border-transparent hover:border-primary" data-template="minimalist" onclick="switchTemplate('minimalist')">
+                                <div class="bg-background rounded border h-16 mb-2 flex items-center justify-center">
+                                    <div class="text-xs text-muted-foreground">
+                                        <div class="h-1 bg-foreground w-8 mb-1"></div>
+                                        <div class="h-1 bg-muted-foreground w-6"></div>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-center text-foreground">Minimalist</div>
+                            </div>
+                            
+                            <div class="template-card bg-muted rounded-lg p-3 cursor-pointer border border-primary" data-template="professional" onclick="switchTemplate('professional')">
+                                <div class="bg-background rounded border h-16 mb-2 flex items-center justify-center">
+                                    <div class="text-xs text-muted-foreground">
+                                        <div class="h-1 bg-primary w-8 mb-1"></div>
+                                        <div class="h-1 bg-muted-foreground w-6"></div>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-center text-foreground font-medium">Professional</div>
+                            </div>
+                            
+                            <div class="template-card bg-muted rounded-lg p-3 cursor-pointer border border-transparent hover:border-primary" data-template="creative" onclick="switchTemplate('creative')">
+                                <div class="bg-background rounded border h-16 mb-2 flex items-center justify-center">
+                                    <div class="text-xs text-muted-foreground">
+                                        <div class="h-1 bg-accent w-8 mb-1"></div>
+                                        <div class="h-1 bg-muted-foreground w-6"></div>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-center text-foreground">Creative</div>
+                            </div>
+                            
+                            <div class="template-card bg-muted rounded-lg p-3 cursor-pointer border border-transparent hover:border-primary" data-template="modern" onclick="switchTemplate('modern')">
+                                <div class="bg-background rounded border h-16 mb-2 flex items-center justify-center">
+                                    <div class="text-xs text-muted-foreground">
+                                        <div class="h-1 bg-foreground w-8 mb-1"></div>
+                                        <div class="h-1 bg-primary w-6"></div>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-center text-foreground">Modern</div>
+                            </div>
+                            <!-- @END_MAP )) -->
+                        </div>
+                    </div>
+
+                    <!-- Customization Section -->
+                    <div class="p-6 border-b border-border">
+                        <h3 class="font-semibold text-foreground mb-4">Customize</h3>
+                        
+                        <!-- Font Selection -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-foreground mb-2">Font</label>
+                            <select class="w-full px-3 py-2 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent text-sm" data-implementation="Update resume font family">
+                                <option>Inter (Recommended)</option>
+                                <option>Arial</option>
+                                <option>Times New Roman</option>
+                                <option>Georgia</option>
+                                <option>Helvetica</option>
+                            </select>
+                        </div>
+
+                        <!-- Font Size -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-foreground mb-2">Font Size</label>
+                            <div class="flex items-center space-x-3">
+                                <button class="w-8 h-8 bg-muted rounded flex items-center justify-center hover:bg-muted/80 transition-colors" data-implementation="Decrease font size">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <span class="text-sm text-foreground min-w-8 text-center" data-bind="fontSize">12pt</span>
+                                <button class="w-8 h-8 bg-muted rounded flex items-center justify-center hover:bg-muted/80 transition-colors" data-implementation="Increase font size">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Color Theme -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-foreground mb-2">Color Theme</label>
+                            <div class="flex space-x-3">
+                                <div class="w-8 h-8 bg-primary rounded-full cursor-pointer border-2 border-primary" data-color="blue" onclick="changeColor('blue')"></div>
+                                <div class="w-8 h-8 bg-accent rounded-full cursor-pointer border-2 border-transparent hover:border-accent" data-color="green" onclick="changeColor('green')"></div>
+                                <div class="w-8 h-8 bg-destructive rounded-full cursor-pointer border-2 border-transparent hover:border-destructive" data-color="red" onclick="changeColor('red')"></div>
+                                <div class="w-8 h-8 bg-gray-600 rounded-full cursor-pointer border-2 border-transparent hover:border-gray-600" data-color="gray" onclick="changeColor('gray')"></div>
+                            </div>
+                        </div>
+
+                        <!-- Spacing -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-foreground mb-2">Line Spacing</label>
+                            <select class="w-full px-3 py-2 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent text-sm" data-implementation="Update line spacing">
+                                <option>Normal (1.0)</option>
+                                <option>Relaxed (1.15)</option>
+                                <option>Loose (1.5)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- ATS Optimization Checker -->
+                    <div class="p-6">
+                        <h3 class="font-semibold text-foreground mb-4 flex items-center">
+                            <i class="fas fa-check-circle text-accent mr-2"></i>
+                            ATS Optimization
+                        </h3>
+                        
+                        <!-- ATS Warnings -->
+                        <!-- @COMPONENT: ATSChecker -->
+                        <div class="space-y-3">
+                            <div class="flex items-start space-x-3 p-3 bg-accent/10 rounded-lg">
+                                <i class="fas fa-check-circle text-accent text-sm mt-0.5"></i>
+                                <div class="text-sm">
+                                    <p class="text-foreground font-medium">Great font choice!</p>
+                                    <p class="text-muted-foreground">Using ATS-friendly fonts improves parsing.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                <i class="fas fa-exclamation-triangle text-yellow-600 text-sm mt-0.5"></i>
+                                <div class="text-sm">
+                                    <p class="text-foreground font-medium">Consider adding keywords</p>
+                                    <p class="text-muted-foreground">Include industry-specific terms from the job posting.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- @END_COMPONENT: ATSChecker -->
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: EditorSidebar -->
+
+                <!-- Resume Preview Area -->
+                <!-- @COMPONENT: ResumePreview -->
+                <div class="flex-1 bg-muted p-8 overflow-y-auto">
+                    <div class="max-w-2xl mx-auto">
+                        <!-- Resume Document -->
+                        <div class="resume-preview bg-background shadow-2xl rounded-lg p-8 min-h-[11in] relative" id="resume-preview" data-implementation="Use Slate.js for rich text editing">
+                            <!-- Header Section -->
+                            <div class="border-b-2 border-primary pb-6 mb-6">
+                                <h1 class="text-3xl font-bold text-foreground mb-2" contenteditable="true" data-bind="personalInfo.fullName">John Smith</h1>
+                                <div class="text-muted-foreground flex flex-wrap items-center gap-4">
+                                    <span contenteditable="true" data-bind="personalInfo.phone">(555) 123-4567</span>
+                                    <span contenteditable="true" data-bind="personalInfo.email">john.smith@email.com</span>
+                                    <span contenteditable="true" data-bind="personalInfo.location">San Francisco, CA</span>
+                                    <a href="#" class="text-primary hover:underline" contenteditable="true" data-bind="personalInfo.linkedin">linkedin.com/in/johnsmith</a>
+                                </div>
+                            </div>
+
+                            <!-- Professional Summary -->
+                            <div class="mb-6">
+                                <h2 class="text-xl font-semibold text-primary mb-3">Professional Summary</h2>
+                                <p class="text-foreground leading-relaxed" contenteditable="true" data-bind="summary">
+                                    Results-driven software engineer with 5+ years of experience developing scalable web applications. Proven expertise in React, Node.js, and cloud technologies. Led teams of 4+ developers and delivered projects 20% ahead of schedule.
+                                </p>
+                            </div>
+
+                            <!-- Work Experience -->
+                            <div class="mb-6">
+                                <h2 class="text-xl font-semibold text-primary mb-4">Work Experience</h2>
+                                
+                                <!-- Experience Item -->
+                                <!-- @MAP: workExperience.map(job => ( -->
+                                <div class="mb-6">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h3 class="font-semibold text-foreground" contenteditable="true" data-bind="job.title">Senior Software Engineer</h3>
+                                            <p class="text-muted-foreground" contenteditable="true" data-bind="job.company">TechCorp Inc.</p>
+                                        </div>
+                                        <span class="text-muted-foreground text-sm" contenteditable="true" data-bind="job.dates">Jan 2021 - Present</span>
+                                    </div>
+                                    <ul class="list-disc list-inside space-y-1 text-foreground">
+                                        <li contenteditable="true" data-bind="job.achievements[0]">Led development of microservices architecture, reducing system latency by 40%</li>
+                                        <li contenteditable="true" data-bind="job.achievements[1]">Mentored 3 junior developers and implemented code review processes</li>
+                                        <li contenteditable="true" data-bind="job.achievements[2]">Collaborated with product team to define technical requirements for new features</li>
+                                    </ul>
+                                </div>
+
+                                <div class="mb-6">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h3 class="font-semibold text-foreground" contenteditable="true">Software Engineer</h3>
+                                            <p class="text-muted-foreground" contenteditable="true">StartupXYZ</p>
+                                        </div>
+                                        <span class="text-muted-foreground text-sm" contenteditable="true">Jun 2019 - Dec 2020</span>
+                                    </div>
+                                    <ul class="list-disc list-inside space-y-1 text-foreground">
+                                        <li contenteditable="true">Developed and maintained React applications serving 10,000+ daily users</li>
+                                        <li contenteditable="true">Implemented automated testing suite, increasing code coverage to 85%</li>
+                                        <li contenteditable="true">Optimized database queries, improving application performance by 30%</li>
+                                    </ul>
+                                </div>
+                                <!-- @END_MAP )) -->
+                            </div>
+
+                            <!-- Education -->
+                            <div class="mb-6">
+                                <h2 class="text-xl font-semibold text-primary mb-4">Education</h2>
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="font-semibold text-foreground" contenteditable="true" data-bind="education.degree">Bachelor of Science in Computer Science</h3>
+                                        <p class="text-muted-foreground" contenteditable="true" data-bind="education.school">University of California, Berkeley</p>
+                                    </div>
+                                    <span class="text-muted-foreground text-sm" contenteditable="true" data-bind="education.year">2019</span>
+                                </div>
+                            </div>
+
+                            <!-- Skills -->
+                            <div class="mb-6">
+                                <h2 class="text-xl font-semibold text-primary mb-4">Technical Skills</h2>
+                                <!-- @MAP: skills.map(skillCategory => ( -->
+                                <div class="mb-3">
+                                    <span class="font-medium text-foreground" contenteditable="true">Programming Languages:</span>
+                                    <span class="text-foreground ml-2" contenteditable="true">JavaScript, TypeScript, Python, Java, Go</span>
+                                </div>
+                                <div class="mb-3">
+                                    <span class="font-medium text-foreground" contenteditable="true">Frontend:</span>
+                                    <span class="text-foreground ml-2" contenteditable="true">React, Vue.js, HTML5, CSS3, Tailwind CSS</span>
+                                </div>
+                                <div class="mb-3">
+                                    <span class="font-medium text-foreground" contenteditable="true">Backend:</span>
+                                    <span class="text-foreground ml-2" contenteditable="true">Node.js, Express, GraphQL, REST APIs</span>
+                                </div>
+                                <div class="mb-3">
+                                    <span class="font-medium text-foreground" contenteditable="true">Database:</span>
+                                    <span class="text-foreground ml-2" contenteditable="true">PostgreSQL, MongoDB, Redis</span>
+                                </div>
+                                <div class="mb-3">
+                                    <span class="font-medium text-foreground" contenteditable="true">Tools & Cloud:</span>
+                                    <span class="text-foreground ml-2" contenteditable="true">Docker, AWS, Git, Jenkins, Kubernetes</span>
+                                </div>
+                                <!-- @END_MAP )) -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: ResumePreview -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation Functions
+        (function() {
+            function showPage(pageId) {
+                const pages = ['homepage', 'import-flow', 'build-flow', 'resume-editor'];
+                pages.forEach(page => {
+                    document.getElementById(page).classList.add('hidden');
+                });
+                document.getElementById(pageId).classList.remove('hidden');
+            }
+
+            window.showHomepage = () => showPage('homepage');
+            window.showImportFlow = () => showPage('import-flow');
+            window.showBuildFlow = () => showPage('build-flow');
+            window.showResumeEditor = () => showPage('resume-editor');
+
+            // Template switching
+            window.switchTemplate = function(templateName) {
+                // Remove active state from all templates
+                document.querySelectorAll('.template-card').forEach(card => {
+                    card.classList.remove('border-primary');
+                    card.classList.add('border-transparent');
+                });
+                
+                // Add active state to selected template
+                document.querySelector(`[data-template="${templateName}"]`).classList.add('border-primary');
+                document.querySelector(`[data-template="${templateName}"]`).classList.remove('border-transparent');
+                
+                // TODO: Apply template styling to resume preview
+                console.log(`Switching to ${templateName} template`);
+            };
+
+            // Color changing
+            window.changeColor = function(color) {
+                // Remove active state from all colors
+                document.querySelectorAll('[data-color]').forEach(colorButton => {
+                    colorButton.classList.remove('border-2');
+                    colorButton.classList.add('border-2', 'border-transparent');
+                });
+                
+                // Add active state to selected color
+                const selectedColor = document.querySelector(`[data-color="${color}"]`);
+                const colorMap = {
+                    blue: 'border-primary',
+                    green: 'border-accent', 
+                    red: 'border-destructive',
+                    gray: 'border-gray-600'
+                };
+                
+                selectedColor.classList.remove('border-transparent');
+                selectedColor.classList.add(colorMap[color]);
+                
+                // TODO: Apply color theme to resume
+                console.log(`Changing color theme to ${color}`);
+            };
+
+            // Initialize with homepage
+            showHomepage();
+        })();
+    </script>
+</body>
+</html>
